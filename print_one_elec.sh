@@ -18,7 +18,7 @@ export TEMPFILE=$(mktemp)
 
 # first write the current power consumption, which will be the header
 export CURRENT_PWR=$(echo $MESSAGE | jq '.electricitymeter.power.value')
-echo "CURRENT ELEC USAGE: $CURRENT_PWR kW" > $TEMPFILE
+echo "ELEC NOW: $CURRENT_PWR kW" > $TEMPFILE
 
 # do we have free power right now?
 if [[ "$CURRENT_PWR" == "0.000" ]]; then
@@ -26,7 +26,7 @@ if [[ "$CURRENT_PWR" == "0.000" ]]; then
 fi
 
 # now write the entire json message
-echo "$MESSAGE" | grep { | jq >> $TEMPFILE
+echo "$MESSAGE" >> $TEMPFILE
 
 # print it
 ./print_txt.sh $TEMPFILE
