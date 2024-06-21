@@ -39,7 +39,7 @@ DATETIME=$(date '+%Y-%m-%dT%H:%MZ')
 INTENSITY=$(curl https://api.carbonintensity.org.uk/regional/intensity/${DATETIME}/fw24h/postcode/${POSTCODE} | jq)
 # extract just the relevant bits and only for the next few hours. First line is now.
 # Fields "time,intensity_integer,intensity_text"
-FORECAST=$(echo "$INTENSITY" | jq -r '.data.data[] | (.from | strptime("%Y-%m-%dT%H:%MZ") | strftime("%H:%M") ) + "," + .intensity.index' | head -6)
+FORECAST=$(echo "$INTENSITY" | jq -r '.data.data[] | (.from | strptime("%Y-%m-%dT%H:%MZ") | strftime("%H:%M") ) + "," + .intensity.index' | head -12)
 # I took out + "," + (.intensity.forecast|tostring)
 
 # is it really intensive right now?
@@ -54,7 +54,9 @@ if [[ "$TEXT_INTENSITY_NOW" == "moderate" ]] || [[ "$TEXT_INTENSITY_NOW" == "hig
     echo "USE LESS ENERGY NOW IF POSS" > $TEMPFILE
     echo "Elec now: $CURRENT_PWR kW" >> $TEMPFILE
     echo "Grid carbon now: $TEXT_INTENSITY_NOW" >> $TEMPFILE
-    echo "\n6hr forecast:\n\ntime,intensity\n$FORECAST" >> $TEMPFILE
+    echo "\n6hr intensity forecast: \n" >> $TEMPFILE
+    echo "    time ,intensity" >> $TEMPFILE
+    echo "$(echo $FORECAST | sed -e 's/^/    /')" >> $TEMPFILE
 
     # print
     /home/andyrpi/printfun/print_txt.sh $TEMPFILE
