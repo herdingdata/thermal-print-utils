@@ -39,10 +39,11 @@ DATETIME=$(date '+%Y-%m-%dT%H:%MZ')
 INTENSITY=$(curl https://api.carbonintensity.org.uk/regional/intensity/${DATETIME}/fw24h/postcode/${POSTCODE} | jq)
 # extract just the relevant bits and only for the next few hours. First line is now.
 # Fields "time,intensity_integer,intensity_text"
-FORECAST=$(echo "$INTENSITY" | jq -r '.data.data[] | (.from | strptime("%Y-%m-%dT%H:%MZ") | strftime("%H:%M") ) + "," + (.intensity.forecast|tostring) + "," + .intensity.index' | head -6)
+FORECAST=$(echo "$INTENSITY" | jq -r '.data.data[] | (.from | strptime("%Y-%m-%dT%H:%MZ") | strftime("%H:%M") ) + "," + .intensity.index' | head -6)
+# I took out + "," + (.intensity.forecast|tostring)
 
 # is it really intensive right now?
-TEXT_INTENSITY_NOW=$(echo "$FORECAST" | head -1 | awk -F "\"*,\"*" '{print $3}')
+TEXT_INTENSITY_NOW=$(echo "$FORECAST" | head -1 | awk -F "\"*,\"*" '{print $2}')
 if [[ "$TEXT_INTENSITY_NOW" == "moderate" ]] || [[ "$TEXT_INTENSITY_NOW" == "high" ]] || [[ "$TEXT_INTENSITY_NOW" == "very high" ]]; then
     echo $(date) "/print_high_intensity_prompt.sh: printing a message that we should reduce our power right now"
 
@@ -53,7 +54,7 @@ if [[ "$TEXT_INTENSITY_NOW" == "moderate" ]] || [[ "$TEXT_INTENSITY_NOW" == "hig
     echo "USE LESS ENERGY NOW IF POSS" > $TEMPFILE
     echo "Elec now: $CURRENT_PWR kW" >> $TEMPFILE
     echo "Grid carbon now: $TEXT_INTENSITY_NOW" >> $TEMPFILE
-    echo "\nForecast for the next 6 hrs:\ntime,intensity,text\n$FORECAST" >> $TEMPFILE
+    echo "\n6hr forecast:\n\ntime,intensity\n$FORECAST" >> $TEMPFILE
 
     # print
     /home/andyrpi/printfun/print_txt.sh $TEMPFILE
