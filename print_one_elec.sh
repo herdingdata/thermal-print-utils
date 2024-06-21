@@ -21,12 +21,12 @@ export CURRENT_PWR=$(echo $MESSAGE | jq '.electricitymeter.power.value')
 echo "ELEC NOW: $CURRENT_PWR kW" > $TEMPFILE
 
 # do we have free power right now?
-if [[ "$CURRENT_PWR" == "0.000" ]]; then
-   echo "\n\n\n----------------------------\nZOMG YOU HAVE FREE POWER\n----------------------------\n\n\n\n\n\n" >> $TEMPFILE
+if [[ "$CURRENT_PWR" == "0" ]]; then
+   echo "\n----------------------------\nZOMG YOU HAVE FREE POWER\n----------------------------\n\n\n\n\n\n-" >> $TEMPFILE
 fi
 
 # now write the entire json message
 echo "$MESSAGE" >> $TEMPFILE
 
 # print it
-./print_txt.sh $TEMPFILE
+/home/andyrpi/printfun/print_txt.sh $TEMPFILE
