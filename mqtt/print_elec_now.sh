@@ -8,7 +8,7 @@
 #                the text I've replaced with "[redacted]" is the id you need
 
 # Usage:
-# source ~/mqtt_creds && ./print_one_elec.sh
+# source ~/mqtt_creds && ./print_elec_now.sh
 
 # grab a message (can take ~10s)
 export MESSAGE=$(mosquitto_sub -d -t "glow/$GLOW_DEVICE/SENSOR/electricitymeter" -u $MQTT_USER -P $MQTT_PASS -C 1 | grep { | jq)
