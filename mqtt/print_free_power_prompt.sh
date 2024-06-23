@@ -11,20 +11,20 @@
 # source ~/bin/mqtt_creds && ./print_free_power_prompt.sh
 
 # grab a message (can take ~10s)
-export MESSAGE=$(mosquitto_sub -d -t "glow/$GLOW_DEVICE/SENSOR/electricitymeter" -u $MQTT_USER -P $MQTT_PASS -C 1 | grep { | jq)
+MESSAGE=$(mosquitto_sub -d -t "glow/$GLOW_DEVICE/SENSOR/electricitymeter" -u $MQTT_USER -P $MQTT_PASS -C 1 | grep { | jq)
 
 # get a tempfile
-export TEMPFILE=$(mktemp)
+TEMPFILE=$(mktemp)
 
 # first write the current power consumption, which will be the header
-export CURRENT_PWR=$(echo $MESSAGE | jq '.electricitymeter.power.value')
+CURRENT_PWR=$(echo $MESSAGE | jq '.electricitymeter.power.value')
 
 # do we have free power right now?
 if [[ "$CURRENT_PWR" == "0" ]]; then
     echo $(date) "/print_one_elec_if_free_now.sh: printing a message that we have free power right now"
 
     # get a tempfile
-    export TEMPFILE=$(mktemp)
+    TEMPFILE=$(mktemp)
 
     # put some content in it
     echo "ELEC NOW: $CURRENT_PWR kW" > $TEMPFILE
