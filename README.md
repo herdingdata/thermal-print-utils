@@ -13,3 +13,6 @@ There are parts which are kinda hardcoded to my particular setup.
 I'm publishing them here in the hope that parts of these
 scripts which can serve as inspiration for others.
 They're not intended to be run verbatim._
+
+I wrote a blog post to explain more about what this does and how to get it all up and running.
+https://www.herdingdata.co.uk/calls-to-action-to-change-energy-habits-to-use-less-fossil-fuels-with-a-thermal-receipt-printer/
