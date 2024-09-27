@@ -1,8 +1,9 @@
 #!/bin/bash
+# Read a file and print it
 # Adds a date as the first line. Pads hashes around line 1 to emphasise a title. Wrap the text. Print it all.
 
 # Usage:
-# ./print_txt.sh filepath
+# ./print_file filepath
 
 DT=$(date '+%Y-%m-%d %H:%M:%S')
 
@@ -16,4 +17,4 @@ TEXT_PROCESSED=$(printf "$DT\n\n$TEXT_START" | sed '3i##########################
 echo "$TEXT_PROCESSED"
 
 # print it
-echo "$TEXT_PROCESSED" | lp -s
+echo "$TEXT_PROCESSED" | tcat

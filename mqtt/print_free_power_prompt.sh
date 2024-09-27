@@ -33,7 +33,7 @@ if [[ "$CURRENT_PWR" == "0" ]]; then
     # echo "$MESSAGE" >> $TEMPFILE
 
     # print
-    /home/andyrpi/printfun/print_txt.sh $TEMPFILE
+    /home/andyrpi/printfun/print_file $TEMPFILE
 
 else
     # do nothing because we only care about printing something if there's free power now

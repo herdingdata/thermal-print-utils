@@ -59,7 +59,7 @@ if [[ "$TEXT_INTENSITY_NOW" == "moderate" ]] || [[ "$TEXT_INTENSITY_NOW" == "hig
     echo "$(echo $FORECAST | sed -e 's/^/    /')" >> $TEMPFILE
 
     # print
-    /home/andyrpi/printfun/print_txt.sh $TEMPFILE
+    /home/andyrpi/printfun/print_file $TEMPFILE
 
 else
     # do nothing because we only care about printing something if there's free power now

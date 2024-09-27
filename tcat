@@ -1,0 +1,6 @@
+#!/bin/bash
+# just send the contents of stdin to the thermal printer. Waaaow I'm a cat.
+# Usage:
+# echo "hello" | ./tcat
+stdin=$(cat)
+echo "$stdin" | lp -s

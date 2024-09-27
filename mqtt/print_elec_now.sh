@@ -29,4 +29,4 @@ fi
 echo "$MESSAGE" >> $TEMPFILE
 
 # print it
-/home/andyrpi/printfun/print_txt.sh $TEMPFILE
+/home/andyrpi/printfun/print_file $TEMPFILE
