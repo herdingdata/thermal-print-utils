@@ -1,0 +1,21 @@
+#!/bin/bash
+# Reads a filepath which is expected to be a task in my todo list and print it.
+# Exactly the same as print_file but adds the second line as a smaller header
+# Adds a date as the first line. Pads hashes around line 1 to emphasise a title. Wrap the text. Print it all.
+
+# Usage:
+# ./print_task filepath
+
+DT=$(date '+%Y-%m-%d %H:%M:%S')
+
+# read the file and wrap to 28chars (80mm paper)
+TEXT_START=$(echo "$@" | fmt -w 28 -s)
+
+# add our header emphasis
+TEXT_PROCESSED=$(printf "$DT\n\n$TEXT_START" | sed '3i############################' | sed '5i############################\n' | sed '7i----------------------------\n')
+
+# show the user what we've parsed
+echo "$TEXT_PROCESSED"
+
+# print it
+echo "$TEXT_PROCESSED" | tcat
