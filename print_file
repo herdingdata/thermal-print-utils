@@ -17,4 +17,4 @@ TEXT_PROCESSED=$(printf "$DT\n\n$TEXT_START" | sed '3i##########################
 echo "$TEXT_PROCESSED"
 
 # print it
-echo "$TEXT_PROCESSED" | tcat
+echo "$TEXT_PROCESSED" | ./tcat
